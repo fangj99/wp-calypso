@@ -192,6 +192,17 @@ export default React.createClass( {
 		return buttonLabels[ primaryButtonState ];
 	},
 
+	getVerificationNoticeLabel: function() {
+		const primaryButtonState = this.getPrimaryButtonState();
+		const buttonLabels = {
+			update: this.translate( 'To update, please verify your email address.' ),
+			schedule: this.translate( 'To schedule, please verify your email address.' ),
+			publish: this.translate( 'To publish, please verify your email address.' ),
+			requestReview: this.translate( 'To submit for review, please verify your email address.' ),
+		};
+		return buttonLabels[ primaryButtonState ];
+	},
+
 	toggleSchedulePopover: function() {
 		this.setState( { showSchedulePopover: ! this.state.showSchedulePopover } );
 	},
@@ -449,7 +460,9 @@ export default React.createClass( {
 						<Gridicon
 							icon="info"
 							className="editor-ground-control__email-verification-notice-icon" />
-						{ this.translate( 'You must verify your email address before you can publish.' ) }
+						{ this.getVerificationNoticeLabel() }
+						{ ' ' }
+						<u>{ this.translate( 'Learn More' ) }</u>
 					</div>
 				}
 			</Card>
