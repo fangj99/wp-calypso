@@ -304,7 +304,8 @@ export default React.createClass( {
 	isPrimaryButtonEnabled: function() {
 		return ! this.props.isPublishing &&
 			! this.props.isSaveBlocked &&
-			this.props.hasContent;
+			this.props.hasContent &&
+			! userUtils.needsVerificationForSite( this.props.site );
 	},
 
 	toggleAdvancedStatus: function() {
