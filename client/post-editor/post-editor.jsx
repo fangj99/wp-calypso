@@ -407,6 +407,7 @@ const PostEditor = React.createClass( {
 								onPreview={ this.onPreview }
 								onPublish={ this.onPublish }
 								onTrashingPost={ this.onTrashingPost }
+								onMoreInfoAboutEmailVerify={ this.onMoreInfoAboutEmailVerify }
 								site={ site }
 								type={ this.props.type }
 							/>
@@ -606,6 +607,12 @@ const PostEditor = React.createClass( {
 		}
 
 		return path;
+	},
+
+	onMoreInfoAboutEmailVerify: function() {
+		this.setState( {
+			showVerifyEmailDialog: true
+		} );
 	},
 
 	onTrashingPost: function( error ) {
