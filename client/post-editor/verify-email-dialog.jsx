@@ -45,16 +45,10 @@ class VerifyEmailDialog extends React.Component {
 	getDialogButtons() {
 		return [
 			<FormButton
-				key="publish"
-				isPrimary={ true }
-				onClick={ this.props.onTryAgain }>
-					{ i18n.translate( 'I clicked on the email, publish' ) }
-			</FormButton>,
-			<FormButton
 				key="close"
-				isPrimary={ false }
+				isPrimary={ true }
 				onClick={ this.props.onClose }>
-					{ i18n.translate( 'Back' ) }
+					{ i18n.translate( 'Got It' ) }
 			</FormButton>
 		];
 	}
