@@ -55,8 +55,8 @@ class VerifyEmailDialog extends React.Component {
 
 	render() {
 		const strings = {
-			postSaved: i18n.translate( 'Post saved.' ),
-			urgeToVerify: i18n.translate( 'To publish, please verify your email address.' ),
+			urgeToVerify: i18n.translate( 'Please verify your email address.' ),
+			validationReason: i18n.translate( 'To prevent Spam, and to enable recovery if you ever forget your password, we require you to verify your email addresses before you can publish content.' ),
 			validationEmailSent: i18n.translate(
 				'You should have received an email at {{strong}}%(email)s{{/strong}} when you registered, with a link to validate your email address. If you can\'t find the email, just {{sendAgain}}click here to send it again{{/sendAgain}}.',
 				{
@@ -86,9 +86,9 @@ class VerifyEmailDialog extends React.Component {
 				additionalClassNames="verification-modal"
 			>
 				<h1>
-					{ strings.postSaved }<br />
 					{ strings.urgeToVerify }
 				</h1>
+				<p>{ strings.validationReason }</p>
 				<p>{ strings.validationEmailSent }</p>
 				<p>{ strings.userEmailWrong }</p>
 			</Dialog>
