@@ -49,6 +49,12 @@ class VerifyEmailDialog extends React.Component {
 				isPrimary={ true }
 				onClick={ this.props.onClose }>
 					{ i18n.translate( 'Got It' ) }
+			</FormButton>,
+			<FormButton
+				key="resend"
+				isPrimary={ false }
+				onClick={ this.props.handleSendVerification }>
+					{ i18n.translate( 'Resend Email' ) }
 			</FormButton>
 		];
 	}
