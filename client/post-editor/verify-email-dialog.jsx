@@ -62,9 +62,10 @@ class VerifyEmailDialog extends React.Component {
 			confirmReasoning: i18n.translate( 'Email confirmation allows us to assit when recovering your account in the event you forget your password.' ),
 
 			confirmEmail: i18n.translate(
-				'%(email)s {{emailPreferences}}change{{/emailPreferences}}',
+				'{{wrapper}}%(email)s{{/wrapper}} {{emailPreferences}}change{{/emailPreferences}}',
 				{
 					components: {
+						wrapper: <span />,
 						emailPreferences: <a href="/me/account" />
 					},
 					args: {

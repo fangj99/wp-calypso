@@ -16,6 +16,14 @@
 		&.confirmation-dialog__email {
 			margin-bottom: 16px;
 			color: darken( $gray, 10 );
+			
+			span {
+				display: inline-block;
+				max-width: 70%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				margin-right: 5px;
+			}
 		}
 
 		&.confirmation-dialog__reasoning {
