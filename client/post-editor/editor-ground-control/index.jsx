@@ -195,10 +195,10 @@ export default React.createClass( {
 	getVerificationNoticeLabel: function() {
 		const primaryButtonState = this.getPrimaryButtonState();
 		const buttonLabels = {
-			update: this.translate( 'To update, please verify your email address.' ),
-			schedule: this.translate( 'To schedule, please verify your email address.' ),
-			publish: this.translate( 'To publish, please verify your email address.' ),
-			requestReview: this.translate( 'To submit for review, please verify your email address.' ),
+			update: this.translate( 'To update, please confirm your email address.' ),
+			schedule: this.translate( 'To schedule, please confirm your email address.' ),
+			publish: this.translate( 'To publish, please confirm your email address.' ),
+			requestReview: this.translate( 'To submit for review, please confirm your email address.' ),
 		};
 		return buttonLabels[ primaryButtonState ];
 	},
