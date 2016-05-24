@@ -9,6 +9,7 @@ import noop from 'lodash/noop';
  */
 import Dialog from 'components/dialog';
 import FormButton from 'components/forms/form-button';
+import Spinner from 'components/spinner';
 import i18n from 'lib/mixins/i18n';
 
 class VerifyEmailDialog extends React.Component {
@@ -47,7 +48,6 @@ class VerifyEmailDialog extends React.Component {
 			<FormButton
 				key="close"
 				isPrimary={ true }
-				disabled={ this.state.pendingRequest }
 				onClick={ this.props.onClose }>
 					{ i18n.translate( 'OK' ) }
 			</FormButton>,
@@ -56,7 +56,13 @@ class VerifyEmailDialog extends React.Component {
 				isPrimary={ false }
 				disabled={ this.state.pendingRequest || this.state.emailSent }
 				onClick={ this.handleSendVerification }>
-					{ this.state.emailSent ? i18n.translate( 'Email Sent' ) : i18n.translate( 'Resend Email' ) }
+				{ this.state.emailSent ?
+					i18n.translate( 'Email Sent' ) :
+					( this.state.pendingRequest ?
+						<Spinner /> :
+						i18n.translate( 'Resend Email' )
+					)
+				}
 			</FormButton>
 		];
 	}
