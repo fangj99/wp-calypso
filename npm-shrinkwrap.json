@@ -699,9 +699,6 @@
         "glob": {
           "version": "5.0.15"
         },
-        "graceful-fs": {
-          "version": "4.1.4"
-        },
         "q": {
           "version": "1.4.1"
         },
@@ -776,9 +773,6 @@
     "concat-stream": {
       "version": "1.5.1"
     },
-    "config-chain": {
-      "version": "1.1.10"
-    },
     "connect-history-api-fallback": {
       "version": "1.1.0"
     },
@@ -826,9 +820,6 @@
     },
     "creditcards": {
       "version": "1.1.1"
-    },
-    "cross-spawn": {
-      "version": "2.2.3"
     },
     "cross-spawn-async": {
       "version": "2.2.4"
@@ -1068,9 +1059,6 @@
     "enhanced-resolve": {
       "version": "0.9.1",
       "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        },
         "memory-fs": {
           "version": "0.2.0"
         }
@@ -1398,12 +1386,7 @@
       "version": "2.0.2"
     },
     "flat-cache": {
-      "version": "1.0.10",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "1.0.10"
     },
     "flux": {
       "version": "2.1.1",
@@ -1454,16 +1437,8 @@
     "fs-readdir-recursive": {
       "version": "0.1.2"
     },
-    "fs.realpath": {
-      "version": "1.0.0"
-    },
     "fstream": {
-      "version": "1.0.9",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "1.0.10"
     },
     "function-bind": {
       "version": "1.1.0"
@@ -1475,7 +1450,7 @@
       "version": "1.2.7"
     },
     "gaze": {
-      "version": "0.5.2"
+      "version": "1.0.0"
     },
     "generate-function": {
       "version": "2.0.0"
@@ -1531,16 +1506,18 @@
       }
     },
     "globule": {
-      "version": "0.1.0",
+      "version": "0.2.0",
       "dependencies": {
         "glob": {
-          "version": "3.1.21"
-        },
-        "inherits": {
-          "version": "1.0.2"
+          "version": "3.2.11",
+          "dependencies": {
+            "minimatch": {
+              "version": "0.3.0"
+            }
+          }
         },
         "lodash": {
-          "version": "1.0.2"
+          "version": "2.4.2"
         },
         "lru-cache": {
           "version": "2.7.3"
@@ -1554,7 +1531,7 @@
       "version": "1.1.7"
     },
     "graceful-fs": {
-      "version": "1.2.3"
+      "version": "4.1.4"
     },
     "graceful-readlink": {
       "version": "1.0.1"
@@ -1710,6 +1687,9 @@
     "imports-loader": {
       "version": "0.6.5"
     },
+    "in-publish": {
+      "version": "2.0.0"
+    },
     "indent-string": {
       "version": "2.1.0",
       "dependencies": {
@@ -1726,9 +1706,6 @@
     },
     "inherits": {
       "version": "2.0.1"
-    },
-    "ini": {
-      "version": "1.3.4"
     },
     "inquirer": {
       "version": "0.11.4",
@@ -2028,12 +2005,7 @@
       "version": "0.2.5"
     },
     "load-json-file": {
-      "version": "1.1.0",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "1.1.0"
     },
     "loader-utils": {
       "version": "0.2.15",
@@ -2416,9 +2388,6 @@
             }
           }
         },
-        "graceful-fs": {
-          "version": "4.1.4"
-        },
         "lru-cache": {
           "version": "2.7.3"
         },
@@ -2439,13 +2408,10 @@
       }
     },
     "node-sass": {
-      "version": "3.4.2",
+      "version": "3.7.0",
       "dependencies": {
         "chalk": {
           "version": "1.1.3"
-        },
-        "glob": {
-          "version": "5.0.15"
         },
         "supports-color": {
           "version": "2.0.0"
@@ -2472,14 +2438,6 @@
     },
     "npm-run": {
       "version": "1.1.1"
-    },
-    "npmconf": {
-      "version": "2.1.2",
-      "dependencies": {
-        "semver": {
-          "version": "4.3.6"
-        }
-      }
     },
     "npmlog": {
       "version": "2.0.4"
@@ -2553,9 +2511,6 @@
     },
     "os-locale": {
       "version": "1.4.0"
-    },
-    "os-shim": {
-      "version": "0.1.3"
     },
     "os-tmpdir": {
       "version": "1.0.1"
@@ -2653,12 +2608,7 @@
       "version": "0.1.7"
     },
     "path-type": {
-      "version": "1.1.0",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "1.1.0"
     },
     "pbkdf2-compat": {
       "version": "2.0.1"
@@ -2726,9 +2676,6 @@
     },
     "propagate": {
       "version": "0.3.1"
-    },
-    "proto-list": {
-      "version": "1.2.4"
     },
     "protochain": {
       "version": "1.0.3"
@@ -2878,12 +2825,7 @@
       "version": "0.2.1"
     },
     "read-json-sync": {
-      "version": "1.1.1",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "1.1.1"
     },
     "read-pkg": {
       "version": "1.1.0"
@@ -2895,12 +2837,7 @@
       "version": "2.0.6"
     },
     "readdirp": {
-      "version": "2.0.0",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "2.0.0"
     },
     "readline2": {
       "version": "1.0.1"
@@ -3024,12 +2961,7 @@
       "version": "0.1.3"
     },
     "rimraf": {
-      "version": "2.5.2",
-      "dependencies": {
-        "glob": {
-          "version": "7.0.4"
-        }
-      }
+      "version": "2.5.2"
     },
     "ripemd160": {
       "version": "0.2.0"
@@ -3090,9 +3022,6 @@
         },
         "cliui": {
           "version": "3.2.0"
-        },
-        "glob": {
-          "version": "7.0.4"
         },
         "window-size": {
           "version": "0.2.0"
@@ -3303,9 +3232,6 @@
           "version": "0.1.32"
         }
       }
-    },
-    "spawn-sync": {
-      "version": "1.0.15"
     },
     "spdx-correct": {
       "version": "1.0.2"
@@ -3598,9 +3524,6 @@
     "uid": {
       "version": "0.0.2"
     },
-    "uid-number": {
-      "version": "0.0.5"
-    },
     "ultron": {
       "version": "1.0.2"
     },
@@ -3667,12 +3590,7 @@
       "version": "2.1.0"
     },
     "watchpack": {
-      "version": "0.2.9",
-      "dependencies": {
-        "graceful-fs": {
-          "version": "4.1.4"
-        }
-      }
+      "version": "0.2.9"
     },
     "webidl-conversions": {
       "version": "3.0.1"

@@ -37,5 +37,6 @@ env-config.sh
 *.db
 
 /calypso-strings.php
+/server/i18n/test/output.php
 cover.html
 .test.log
