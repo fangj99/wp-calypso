@@ -26,8 +26,6 @@ const Card = require( 'components/card' ),
 
 const VERIFICATION_POLL_INTERVAL = 15000;
 
-import { setDate } from 'state/ui/editor/post/actions';
-
 export default React.createClass( {
 	displayName: 'EditorGroundControl',
 
