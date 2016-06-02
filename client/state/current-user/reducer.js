@@ -8,11 +8,12 @@ import { combineReducers } from 'redux';
  */
 import {
 	CURRENT_USER_ID_SET,
+	CURRENT_USER_FLAGS_RECEIVE,
 	SITE_RECEIVE,
 	SITES_RECEIVE
 } from 'state/action-types';
 import { createReducer } from 'state/utils';
-import { idSchema, capabilitiesSchema } from './schema';
+import { idSchema, capabilitiesSchema, flagsSchema, } from './schema';
 
 /**
  * Tracks the current user ID.
@@ -22,8 +23,12 @@ import { idSchema, capabilitiesSchema } from './schema';
  * @return {Object}        Updated state
  */
 export const id = createReducer( null, {
-	[CURRENT_USER_ID_SET]: ( state, action ) => action.userId
+	[ CURRENT_USER_ID_SET ]: ( state, action ) => action.userId
 }, idSchema );
+
+export const flags = createReducer( [], {
+	[ CURRENT_USER_FLAGS_RECEIVE ]: ( state, action ) => action.flags
+}, flagsSchema );
 
 /**
  * Returns the updated capabilities state after an action has been dispatched.
@@ -35,7 +40,7 @@ export const id = createReducer( null, {
  * @return {Object}        Updated state
  */
 export const capabilities = createReducer( {}, {
-	[SITE_RECEIVE]: ( state, action ) => {
+	[ SITE_RECEIVE ]: ( state, action ) => {
 		if ( ! action.site.capabilities ) {
 			return state;
 		}
@@ -44,7 +49,7 @@ export const capabilities = createReducer( {}, {
 			[ action.site.ID ]: action.site.capabilities
 		} );
 	},
-	[SITES_RECEIVE]: ( state, action ) => {
+	[ SITES_RECEIVE ]: ( state, action ) => {
 		const siteCapabilities = action.sites.reduce( ( memo, site ) => {
 			if ( site.capabilities ) {
 				memo[ site.ID ] = site.capabilities;
@@ -59,5 +64,6 @@ export const capabilities = createReducer( {}, {
 
 export default combineReducers( {
 	id,
-	capabilities
+	capabilities,
+	flags
 } );

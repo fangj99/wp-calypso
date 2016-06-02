@@ -31,3 +31,7 @@ export const capabilitiesSchema = {
 		}
 	}
 };
+
+export const flagsSchema = {
+	type: 'array'
+};
