@@ -283,10 +283,6 @@ module.exports = {
 
 		if ( context.query.verified === '1' ) {
 			notices.success( i18n.translate( "Email verified! Now that you've confirmed your email address you can publish posts on your blog." ) );
-			if ( window.localStorage ) {
-				// use localStorage to signal to other browser windows that the user's email was verified
-				window.localStorage.setItem( '__email_verified_signal__', 1 );
-			}
 		}
 		/**
 		 * Sites is rendered on #primary but it doesn't expect a sidebar to exist

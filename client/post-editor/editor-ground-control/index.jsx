@@ -24,8 +24,6 @@ const Card = require( 'components/card' ),
 	stats = require( 'lib/posts/stats' ),
 	user = require( 'lib/user' )();
 
-const VERIFICATION_POLL_INTERVAL = 15000;
-
 export default React.createClass( {
 	displayName: 'EditorGroundControl',
 
@@ -65,39 +63,18 @@ export default React.createClass( {
 	},
 
 	componentDidMount: function() {
-		if ( userUtils.needsVerificationForSite( this.props.site ) ) {
-			this.pollForVerification();
-		}
+		user.on( 'change', this.updateNeedsVerification );
+		user.on( 'verify', this.updateNeedsVerification );
 	},
 
-	pollForVerification: function() {
-		let serverPoll;
-		let check = ( signal ) => {
-			// skip server poll if page is in the background
-			// and this was not triggered by a signal
-			if ( document.hidden && !signal ) {
-				return;
-			}
+	componentWillUnmount: function() {
+		user.off( 'change', this.updateNeedsVerification );
+		user.off( 'verify', this.updateNeedsVerification );
+	},
 
-			user.once( 'change', () => {
-				if ( !userUtils.needsVerificationForSite( this.props.site ) ) {
-					// email verification took place
-					this.forceUpdate();
-					clearInterval( serverPoll );
-				}
-			} );
-
-			user.fetch();
-		};
-
-		serverPoll = setInterval( check, VERIFICATION_POLL_INTERVAL );
-
-		// wait for localStorage event (from other windows)
-		window.addEventListener( 'storage', ( e ) => {
-			if ( e.key === '__email_verified_signal__' && e.newValue ) {
-				window.localStorage.removeItem( '__email_verified_signal__' );
-				check( true );
-			}
+	updateNeedsVerification: function() {
+		this.setState( {
+			needsVerification: userUtils.needsVerificationForSite( this.props.site ),
 		} );
 	},
 
@@ -107,7 +84,8 @@ export default React.createClass( {
 			showAdvanceStatus: false,
 			showDateTooltip: false,
 			firstDayOfTheMonth: this.getFirstDayOfTheMonth(),
-			lastDayOfTheMonth: this.getLastDayOfTheMonth()
+			lastDayOfTheMonth: this.getLastDayOfTheMonth(),
+			needsVerification: userUtils.needsVerificationForSite( this.props.site ),
 		};
 	},
 
@@ -303,7 +281,7 @@ export default React.createClass( {
 		return ! this.props.isPublishing &&
 			! this.props.isSaveBlocked &&
 			this.props.hasContent &&
-			! userUtils.needsVerificationForSite( this.props.site );
+			! this.state.needsVerification;
 	},
 
 	toggleAdvancedStatus: function() {
@@ -454,7 +432,7 @@ export default React.createClass( {
 					}
 				</div>
 				{
-					userUtils.needsVerificationForSite( this.props.site ) &&
+					this.state.needsVerification &&
 					<div className="editor-ground-control__email-verification-notice" tabIndex={ 7 } onClick={ this.props.onMoreInfoAboutEmailVerify }>
 						<Gridicon
 							icon="info"
