@@ -9,8 +9,6 @@ var debug = require( 'debug' )( 'calypso:user:utilities' ),
  */
 var user = require( 'lib/user' )();
 
-const VERIFICATION_POLL_INTERVAL = 15000;
-
 var userUtils = {
 	getLogoutUrl: function( redirect ) {
 		var url = '/logout',
