@@ -3,8 +3,7 @@
  */
 var React = require( 'react' ),
 	endsWith = require( 'lodash/endsWith' ),
-	page = require( 'page' ),
-	connect = require( 'react-redux' ).connect;
+	{ connect } = require( 'react-redux' );
 
 /**
  * Internal dependencies
@@ -15,8 +14,6 @@ var cartItems = require( 'lib/cart-values' ).cartItems,
 	DomainRegistrationSuggestion = require( 'components/domains/domain-registration-suggestion' ),
 	DomainProductPrice = require( 'components/domains/domain-product-price' ),
 	analyticsMixin = require( 'lib/mixins/analytics' ),
-	abtest = require( 'lib/abtest' ).abtest,
-	upgradesActions = require( 'lib/upgrades/actions' ),
 	{ getCurrentUser } = require( 'state/current-user/selectors' );
 
 var MapDomainStep = React.createClass( {
@@ -27,7 +24,10 @@ var MapDomainStep = React.createClass( {
 		cart: React.PropTypes.object,
 		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] ),
 		initialQuery: React.PropTypes.string,
-		analyticsSection: React.PropTypes.string.isRequired
+		analyticsSection: React.PropTypes.string.isRequired,
+		domainsWithPlansOnly: React.PropTypes.bool.isRequired,
+		onRegisterDomain: React.PropTypes.func.isRequired,
+		onMapDomain: React.PropTypes.func.isRequired
 	},
 
 	getInitialState: function() {
@@ -75,7 +75,7 @@ var MapDomainStep = React.createClass( {
 					</div>
 
 					<DomainProductPrice
-						rule={ cartItems.getDomainPriceRule( abtest( 'domainsWithPlansOnly' ) === 'plansOnly', this.props.selectedSite, this.props.cart, suggestion ) }
+						rule={ cartItems.getDomainPriceRule( this.props.domainsWithPlansOnly, this.props.selectedSite, this.props.cart, suggestion ) }
 						price={ price } />
 
 					<fieldset>
@@ -121,7 +121,7 @@ var MapDomainStep = React.createClass( {
 				<DomainRegistrationSuggestion
 					suggestion={ suggestion }
 					selectedSite={ this.props.selectedSite }
-					withPlansOnly={ abtest( 'domainsWithPlansOnly' ) === 'plansOnly' }
+					withPlansOnly={ this.props.domainsWithPlansOnly }
 					key={ suggestion.domain_name }
 					cart={ this.props.cart }
 					onButtonClick={ this.registerSuggestedDomain } />
@@ -134,11 +134,7 @@ var MapDomainStep = React.createClass( {
 
 		this.recordEvent( 'addDomainButtonClick', this.state.suggestion.domain_name, this.props.analyticsSection );
 
-		if ( this.props.onAddDomain ) {
-			return this.props.onAddDomain( this.state.suggestion );
-		}
-
-		upgradesActions.registerDomain( this.state.suggestion );
+		return this.props.onRegisterDomain( this.state.suggestion );
 	},
 
 	recordInputFocus: function() {
@@ -170,11 +166,7 @@ var MapDomainStep = React.createClass( {
 				return;
 			}
 
-			if ( this.props.onAddMapping ) {
-				return this.props.onAddMapping( domain, this.state );
-			}
-
-			this.addMappingToCart( domain );
+			return this.props.onMapDomain( domain );
 		} );
 
 		canRegister( domain, ( error, result ) => {
@@ -185,14 +177,6 @@ var MapDomainStep = React.createClass( {
 			result.domain_name = domain;
 			this.setState( { suggestion: result } );
 		} );
-	},
-
-	addMappingToCart: function( domain ) {
-		upgradesActions.addItem( cartItems.domainMapping( { domain: domain } ) );
-
-		if ( this.isMounted() ) {
-			page( '/checkout/' + this.props.selectedSite.slug );
-		}
 	},
 
 	handleValidationErrorMessage: function( domain, error ) {
@@ -267,8 +251,4 @@ var MapDomainStep = React.createClass( {
 	}
 } );
 
-module.exports = connect( state => {
-	return {
-		currentUser: getCurrentUser( state )
-	};
-} )( MapDomainStep );
+module.exports = connect( state => ( { currentUser: getCurrentUser( state ) } ) )( MapDomainStep );
