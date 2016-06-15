@@ -13,7 +13,7 @@ import useMockery from 'test/helpers/use-mockery';
 import { useSandbox } from 'test/helpers/use-sinon';
 
 describe( 'PostEditor', function() {
-	let sandbox, TestUtils, PostEditor, SitesList, Site, PostEditStore;
+	let sandbox, TestUtils, PostEditor, SitesList, PostEditStore;
 
 	useFakeDom();
 	useSandbox( ( newSandbox ) => sandbox = newSandbox );
@@ -52,7 +52,6 @@ describe( 'PostEditor', function() {
 		mockery.registerMock( 'post-editor/invalid-url-dialog', MOCK_COMPONENT );
 		mockery.registerMock( 'post-editor/restore-post-dialog', MOCK_COMPONENT );
 		mockery.registerMock( 'post-editor/editor-sidebar/header', MOCK_COMPONENT );
-		mockery.registerMock( 'post-editor/verify-email-dialog', MOCK_COMPONENT );
 		mockery.registerMock( './editor-preview', MOCK_COMPONENT );
 		mockery.registerMock( 'my-sites/drafts/draft-list', MOCK_COMPONENT );
 		mockery.registerMock( 'lib/layout-focus', { set() {} } );
@@ -63,7 +62,6 @@ describe( 'PostEditor', function() {
 		} );
 
 		SitesList = require( 'lib/sites-list/list' );
-		Site = require( 'lib/site' );
 		PostEditStore = require( 'lib/posts/post-edit-store' );
 		PostEditor = require( '../post-editor' );
 		PostEditor.prototype.translate = ( string ) => string;
