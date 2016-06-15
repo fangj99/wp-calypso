@@ -67,11 +67,28 @@ var MapDomain = React.createClass( {
 	},
 
 	handleRegisterDomain( suggestion ) {
-		upgradesActions.registerDomain( suggestion );
+		const items = cartItems.bundleItemWithPlanIfNecessary(
+			cartItems.domainRegistration.fromSuggestion( suggestion ),
+			this.props.domainsWithPlansOnly,
+			this.props.sites.getSelectedSite(),
+			this.props.cart
+		);
+		upgradesActions.addItems( items );
+
+		if ( this.isMounted() ) {
+			page( '/checkout/' + this.props.sites.getSelectedSite().slug );
+		}
 	},
 
 	handleMapDomain( domain ) {
-		upgradesActions.addItem( cartItems.domainMapping( { domain } ) );
+		const items = cartItems.bundleItemWithPlanIfNecessary(
+			cartItems.domainMapping( { domain } ),
+			this.props.domainsWithPlansOnly,
+			this.props.sites.getSelectedSite(),
+			this.props.cart
+		);
+
+		upgradesActions.addItems( items );
 
 		if ( this.isMounted() ) {
 			page( '/checkout/' + this.props.sites.getSelectedSite().slug );
