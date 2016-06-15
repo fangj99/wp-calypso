@@ -160,48 +160,4 @@ describe( 'PostEditor', function() {
 			expect( tree.refs.editor.setEditorContent ).to.not.have.been.called;
 		} );
 	} );
-
-	describe( 'onPublish', function() {
-		it( 'should show verify email dialog if email is not verified', function() {
-			const user = { email_verified: false };
-			user.get = () => user;
-
-			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					sites={ new SitesList() }
-					user={ user }
-				/>
-			);
-
-			tree.setState( { post: { site_ID: 1 } } );
-			tree.onPublish();
-
-			expect( tree.state.showVerifyEmailDialog ).to.equal( true );
-		} );
-
-		it( 'should not show verify email dialog if site is VIP', function() {
-			const user = { email_verified: false };
-			user.get = () => user;
-
-			const sites = new SitesList();
-			sites.initialize( [
-				new Site( { ID: 1, is_vip: true } )
-			] );
-
-			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					sites={ sites }
-					user={ user }
-				/>
-			);
-
-			tree.refs.editor.getContent = () => '';
-			tree.setState( { post: { site_ID: 1 } } );
-			tree.onPublish();
-
-			expect( tree.state.showVerifyEmailDialog ).to.equal( false );
-		} );
-	} );
 } );

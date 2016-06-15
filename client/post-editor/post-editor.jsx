@@ -432,7 +432,6 @@ const PostEditor = React.createClass( {
 					? <VerifyEmailDialog
 						user={ this.props.user }
 						onClose={ this.closeVerifyEmailDialog }
-						onTryAgain={ this.onPublishAfterVerify }
 					/>
 				: null }
 				{ isInvalidURL
@@ -757,29 +756,8 @@ const PostEditor = React.createClass( {
 		}
 	},
 
-	onPublishAfterVerify: function() {
-		var user = this.props.user;
-
-		user.off( 'change', this.onPublish );
-		user.once( 'change', this.onPublish );
-
-		user.fetch();
-	},
-
 	onPublish: function() {
 		var edits = { status: 'publish' };
-		var post = this.state.post;
-		var site = this.props.sites.getSite( post.site_ID );
-
-		if ( userUtils.needsVerificationForSite( site ) ) {
-			this.setState( {
-				showVerifyEmailDialog: true
-			} );
-
-			return;
-		}
-
-		this.setState( { showVerifyEmailDialog: false } );
 
 		// determine if this is a private publish
 		if ( utils.isPrivate( this.state.post ) ) {
