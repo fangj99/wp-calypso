@@ -93,4 +93,3 @@ export default connect( ( state, ownProps ) => {
 		planObject: planObject
 	};
 } )( PlanFeatures );
-
