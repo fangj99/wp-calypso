@@ -108,7 +108,7 @@ const RegisterDomainStep = React.createClass( {
 		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] ),
 		basePath: React.PropTypes.string.isRequired,
 		suggestion: React.PropTypes.string,
-		withPlansOnly: React.PropTypes.bool,
+		domainsWithPlansOnly: React.PropTypes.bool,
 		isSignupStep: React.PropTypes.bool
 	},
 
@@ -605,7 +605,6 @@ module.exports = connect( ( state, props ) => {
 	const queryObject = getQueryObject( props );
 	return {
 		currentUser: getCurrentUser( state ),
-		domainsWithPlansOnly: currentUserHasFlag( state, 'calypso_domains_with_plans_only' ),
 		defaultSuggestions: getDomainsSuggestions( state, queryObject ),
 		defaultSuggestionsError: getDomainsSuggestionsError( state, queryObject )
 	};
