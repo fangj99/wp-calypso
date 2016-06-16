@@ -4,6 +4,7 @@
 import debugModule from 'debug';
 const debug = debugModule( 'calypso:signup' );
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import page from 'page';
 import startsWith from 'lodash/startsWith';
@@ -37,6 +38,7 @@ import analytics from 'lib/analytics';
 import SignupProcessingScreen from 'signup/processing-screen';
 import SignupProcessingScreenI18n from 'signup/processing-screen-i18n'; // Temporary, for i18n to pick up
 import utils from './utils';
+import { currentUserHasFlag } from 'state/current-user/selectors';
 import * as oauthToken from 'lib/oauth-token';
 
 /**
@@ -313,9 +315,7 @@ const Signup = React.createClass( {
 			propsFromConfig = assign( {}, this.props, steps[ this.props.stepName ].props ),
 			stepKey = this.state.loadingScreenStartTime ? 'processing' : this.props.stepName,
 			flow = flows.getFlow( this.props.flowName ),
-			hideFreePlan = this.state.dependencies && this.state.dependencies.domainItem
-				? this.state.dependencies.domainItem.is_domain_registration
-				: false;
+			hideFreePlan = !! ( this.state.dependencies && this.state.dependencies.domainItem && this.state.dependencies.domainItem.is_domain_registration && this.props.domainsWithPlansOnly );
 
 		return (
 			<div className="signup__step" key={ stepKey }>
@@ -372,4 +372,6 @@ const Signup = React.createClass( {
 	}
 } );
 
-export default Signup;
+export default connect( state => ( {
+	domainsWithPlansOnly: currentUserHasFlag( state, 'calypso_domains_with_plans_only' )
+} ) )( Signup );
