@@ -2,6 +2,7 @@
  * External dependencies
  */
 import React from 'react';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
@@ -15,17 +16,17 @@ import {
 	isTheme,
 	isPlan
 } from 'lib/products-values';
+import { currentUserHasFlag } from 'state/current-user/selectors';
 import * as upgradesActions from 'lib/upgrades/actions';
 
 const getIncludedDomain = cartItems.getIncludedDomain;
 
-export default React.createClass( {
-	displayName: 'CartItem',
+const CartItem = React.createClass( {
 
 	removeFromCart: function( event ) {
 		event.preventDefault();
 		analytics.ga.recordEvent( 'Upgrades', 'Clicked Remove From Cart Icon', 'Product ID', this.props.cartItem.product_id );
-		upgradesActions.removeItem( this.props.cartItem );
+		upgradesActions.removeItem( this.props.cartItem, this.props.domainsWithPlansOnly );
 	},
 
 	price: function() {
@@ -189,3 +190,5 @@ export default React.createClass( {
 		}
 	}
 } );
+
+export default connect( state => ( { domainsWithPlansOnly: currentUserHasFlag( state, 'calypso_domains_with_plans_only' ) } ) )( CartItem );
