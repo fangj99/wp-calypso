@@ -17,6 +17,7 @@ import {
 	isPlan
 } from 'lib/products-values';
 import { currentUserHasFlag } from 'state/current-user/selectors';
+import { DWPO } from 'state/current-user/constants';
 import * as upgradesActions from 'lib/upgrades/actions';
 
 const getIncludedDomain = cartItems.getIncludedDomain;
@@ -191,4 +192,4 @@ const CartItem = React.createClass( {
 	}
 } );
 
-export default connect( state => ( { domainsWithPlansOnly: currentUserHasFlag( state, 'calypso_domains_with_plans_only' ) } ) )( CartItem );
+export default connect( state => ( { domainsWithPlansOnly: currentUserHasFlag( state, DWPO ) } ) )( CartItem );
