@@ -36,6 +36,7 @@ var productsValues = require( 'lib/products-values' ),
 	isUnlimitedSpace = productsValues.isUnlimitedSpace,
 	isUnlimitedThemes = productsValues.isUnlimitedThemes,
 	isVideoPress = productsValues.isVideoPress,
+	isWordPressDomain = productsValues.isWordPressDomain,
 	sortProducts = require( 'lib/products-values/sort' ),
 	PLAN_PERSONAL = require( 'lib/plans/constants' ).PLAN_PERSONAL;
 
@@ -715,7 +716,8 @@ function isDomainBeingUsedForPlan( cart, domain ) {
 
 function shouldBundleDomainWithPlan( withPlansOnly, selectedSite, cart, suggestionOrCartItem ) {
 	return withPlansOnly &&
-		( isDomainProduct( suggestionOrCartItem ) || suggestionOrCartItem.cost ) && // not free or a cart item
+		// not free or a cart item
+		( isDomainProduct( suggestionOrCartItem ) || ( suggestionOrCartItem.domain_name && ! isWordPressDomain( suggestionOrCartItem ) ) ) &&
 		( ! isDomainBeingUsedForPlan( cart, suggestionOrCartItem.domain_name ) ) && // a plan in cart
 		( ! isNextDomainFree( cart ) ) && // domain credit
 		( ! hasPlan( cart ) ) && // already a plan in cart
