@@ -110,6 +110,7 @@ var MapDomain = React.createClass( {
 					selectedSite={ selectedSite }
 					onRegisterDomain={ this.handleRegisterDomain }
 					onMapDomain={ this.handleMapDomain }
+					analyticsSection="domains"
 				/>
 			</span>
 		);
