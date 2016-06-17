@@ -211,10 +211,10 @@ const DomainsStep = React.createClass( {
 				<MapDomainStep
 					initialState={ initialState }
 					path={ this.props.path }
-					onAddDomain={ this.handleAddDomain }
-					onAddMapping={ this.handleAddMapping.bind( this, 'mappingForm' ) }
+					onRegisterDomain={ this.handleAddDomain }
+					onMapDomain={ this.handleAddMapping.bind( this, 'mappingForm' ) }
 					onSave={ this.handleSave.bind( this, 'mappingForm' ) }
-					productsList={ productsList }
+					products={ productsList.get() }
 					domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
 					initialQuery={ initialQuery }
 					analyticsSection="signup" />
