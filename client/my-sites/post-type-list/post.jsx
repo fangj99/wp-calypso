@@ -15,6 +15,7 @@ import Card from 'components/card';
 import PostRelativeTimeStatus from 'my-sites/post-relative-time-status';
 import resizeImageUrl from 'lib/resize-image-url';
 import PostTypeListPostActions from './post-actions';
+import { decodeEntities } from 'lib/formatting';
 
 export function PostTypeListPost( { translate, globalId, post, editUrl, className } ) {
 	const classes = classnames( 'post-type-list__post', className );
@@ -33,7 +34,7 @@ export function PostTypeListPost( { translate, globalId, post, editUrl, classNam
 				<div className="post-type-list__post-title-meta">
 					<h1 className="post-type-list__post-title">
 						<a href={ editUrl }>
-							{ post.title || translate( '(no title)' ) }
+							{ decodeEntities( post.title ) || translate( '(no title)' ) }
 						</a>
 					</h1>
 					<div className="post-type-list__post-meta">
