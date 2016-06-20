@@ -53,7 +53,7 @@ export function fetchThemeDetailsData( context, next ) {
 		return next();
 	}
 
-	wpcom.undocumented().themeDetails( themeSlug )
+	wpcom.undocumented().themeDetails( themeSlug, null )
 		.then( themeDetails => {
 			debug( 'caching', themeSlug );
 			themeDetails.timestamp = Date.now();
@@ -85,15 +85,16 @@ export function details( context, next ) {
 		themeSlug: slug,
 		contentSection: context.params.section,
 		title: decodeEntities( title ) + ' — WordPress.com', // TODO: Use lib/screen-title's buildTitle. Cf. https://github.com/Automattic/wp-calypso/issues/3796
-		isLoggedIn: !! user
+		isLoggedIn: !! user,
+		site: context.params.site_id,
 	};
 
 	if ( startsWith( context.prevPath, '/design' ) ) {
 		context.store.dispatch( setBackPath( context.prevPath ) );
 	}
 
-	const ConnectedComponent = ( { themeSlug, contentSection, isLoggedIn } ) => (
-		<ThemeDetailsComponent id={ themeSlug } >
+	const ConnectedComponent = ( { themeSlug, contentSection, isLoggedIn, site } ) => (
+		<ThemeDetailsComponent id={ themeSlug } site={ site } >
 			<ThemeSheetComponent section={ contentSection } isLoggedIn={ isLoggedIn } />
 		</ThemeDetailsComponent>
 	);
