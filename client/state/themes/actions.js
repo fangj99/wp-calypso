@@ -129,7 +129,7 @@ export function receiveThemeDetails( theme ) {
 		themeScreenshot: theme.screenshot,
 		themeDescription: theme.description,
 		themeDescriptionLong: theme.description_long,
-		themeSupportDocumentation: theme.extended ? theme.extended.support_documentation : undefined,
+		themeSupportDocumentation: theme.support_documentation || undefined,
 		themeDownload: theme.download_uri || undefined,
 		themeTaxonomies: theme.taxonomies,
 		themeStylesheet: theme.stylesheet,
