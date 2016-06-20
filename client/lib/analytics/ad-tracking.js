@@ -4,6 +4,7 @@
 import async from 'async';
 import noop from 'lodash/noop';
 import some from 'lodash/some';
+import clone from 'lodash/clone';
 import debugFactory from 'debug';
 const debug = debugFactory( 'calypso:ad-tracking' );
 
@@ -23,13 +24,15 @@ let hasStartedFetchingScripts = false,
  * Constants
  */
 const FACEBOOK_TRACKING_SCRIPT_URL = 'https://connect.facebook.net/en_US/fbevents.js',
+	ATLAS_TRACKING_SCRIPT_URL = 'https://ad.atdmt.com/m/a.js',
 	GOOGLE_TRACKING_SCRIPT_URL = 'https://www.googleadservices.com/pagead/conversion_async.js',
 	BING_TRACKING_SCRIPT_URL = 'https://bat.bing.com/bat.js',
 	GOOGLE_CONVERSION_ID = config( 'google_adwords_conversion_id' ),
 	TRACKING_IDS = {
 		bingInit: '4074038',
 		facebookInit: '823166884443641',
-		googleConversionLabel: 'MznpCMGHr2MQ1uXz_AM'
+		googleConversionLabel: 'MznpCMGHr2MQ1uXz_AM',
+		atlasUniveralTagId: '11187200770563'
 	};
 
 /**
@@ -136,7 +139,7 @@ function recordAddToCart( cartItem ) {
 			product_slug: cartItem.product_slug,
 			free_trial: Boolean( cartItem.free_trial )
 		}
-	)
+	);
 }
 
 function recordPurchase( product ) {
@@ -149,6 +152,9 @@ function recordPurchase( product ) {
 	}
 
 	debug( 'Recording purchase', product );
+
+	// record the purchase w/ Atlas
+	recordPurchaseInAtlas( product );
 
 	// record the purchase w/ Facebook
 	window.fbq(
@@ -180,6 +186,40 @@ function recordPurchase( product ) {
 		},
 		google_remarketing_only: false
 	} );
+}
+
+/**
+ * Tracking conversions in Atlas requires we load the Atlas script
+ * with the event name and properties included as URL parameters
+ *
+ * @see https://app.atlassolutions.com/help/atlashelp/727514814019823/ (Atlas account required)
+ *
+ * @param {Object} product - The product that was just purchased
+ */
+function recordPurchaseInAtlas( product ) {
+	let params, urlParams, urlWithParams;
+
+	params = clone( product );
+
+	// `revenue` and `currency_code` are properties Atlas expects
+	// See: https://app.atlassolutions.com/help/atlashelp/1467977866814592
+	params.revenue = product.cost;
+	params.currency_code = product.currency;
+
+	// We also manually set an `event` property with the event name that we'll reference in Atlas
+	// See: https://app.atlassolutions.com/help/atlashelp/989871004366077
+	params.event = 'Purchase';
+
+	urlParams = Object.keys( params ).map( function( key ) {
+		return encodeURIComponent( key ) + '=' + encodeURIComponent( params[ key ] );
+	} ).join( '&' );
+
+	// Note that the semicolon before the `m` and `cache` params as well
+	// as the cache buster are expected by Atlas
+	urlWithParams = ATLAS_TRACKING_SCRIPT_URL + ';m=' + TRACKING_IDS.atlasUniveralTagId +
+		';cache=' + Math.random() + '?' + urlParams;
+
+	loadScript.loadScript( urlWithParams );
 }
 
 module.exports = {
